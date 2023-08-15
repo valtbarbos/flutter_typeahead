@@ -1,15 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
-import 'package:flutter_typeahead/src/material/field/text_field_configuration.dart';
 import 'package:flutter_typeahead/src/keyboard_suggestion_selection_notifier.dart';
-import 'package:flutter_typeahead/src/should_refresh_suggestion_focus_index_notifier.dart';
+import 'package:flutter_typeahead/src/material/field/text_field_configuration.dart';
 import 'package:flutter_typeahead/src/material/suggestions_box/suggestions_box.dart';
 import 'package:flutter_typeahead/src/material/suggestions_box/suggestions_box_controller.dart';
 import 'package:flutter_typeahead/src/material/suggestions_box/suggestions_box_decoration.dart';
 import 'package:flutter_typeahead/src/material/suggestions_box/suggestions_list.dart';
+import 'package:flutter_typeahead/src/should_refresh_suggestion_focus_index_notifier.dart';
 import 'package:flutter_typeahead/src/typedef.dart';
 import 'package:flutter_typeahead/src/utils.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -379,7 +378,7 @@ class TypeAheadField<T> extends StatefulWidget {
   ///
   /// If not specified, the error is shown in [ThemeData.errorColor](https://docs.flutter.io/flutter/material/ThemeData/errorColor.html)
   final ErrorBuilder? errorBuilder;
-  
+
   /// Used to overcome [Flutter issue 98507](https://github.com/flutter/flutter/issues/98507)
   /// Most commonly experienced when placing the [TypeAheadFormField] on a google map in Flutter Web.
   final bool intercepting;
@@ -640,12 +639,7 @@ class _TypeAheadFieldState<T> extends State<TypeAheadField<T>>
   }
 
   KeyEventResult _onKeyEvent(FocusNode _, RawKeyEvent event) {
-    if (event.isKeyPressed(LogicalKeyboardKey.arrowUp) ||
-        event.isKeyPressed(LogicalKeyboardKey.arrowDown)) {
-      // do nothing to avoid puzzling users until keyboard arrow nav is implemented
-    } else {
-      _keyboardSuggestionSelectionNotifier.onKeyboardEvent(event);
-    }
+    _keyboardSuggestionSelectionNotifier.onKeyboardEvent(event);
     return KeyEventResult.ignored;
   }
 
@@ -872,42 +866,44 @@ class _TypeAheadFieldState<T> extends State<TypeAheadField<T>>
       link: this._layerLink,
       child: PointerInterceptor(
         intercepting: widget.intercepting,
-              child: TextField(
-          focusNode: this._effectiveFocusNode,
-          controller: this._effectiveController,
-          decoration: widget.textFieldConfiguration.decoration,
-          style: widget.textFieldConfiguration.style,
-          textAlign: widget.textFieldConfiguration.textAlign,
-          enabled: widget.textFieldConfiguration.enabled,
-          keyboardType: widget.textFieldConfiguration.keyboardType,
-          autofocus: widget.textFieldConfiguration.autofocus,
-          inputFormatters: widget.textFieldConfiguration.inputFormatters,
-          autocorrect: widget.textFieldConfiguration.autocorrect,
-          maxLines: widget.textFieldConfiguration.maxLines,
-          textAlignVertical: widget.textFieldConfiguration.textAlignVertical,
-          minLines: widget.textFieldConfiguration.minLines,
-          maxLength: widget.textFieldConfiguration.maxLength,
-          maxLengthEnforcement:
-              widget.textFieldConfiguration.maxLengthEnforcement,
-          obscureText: widget.textFieldConfiguration.obscureText,
-          onChanged: widget.textFieldConfiguration.onChanged,
-          onSubmitted: widget.textFieldConfiguration.onSubmitted,
-          onEditingComplete: widget.textFieldConfiguration.onEditingComplete,
-          onTap: widget.textFieldConfiguration.onTap,
-          onTapOutside: widget.textFieldConfiguration.onTapOutside,
-          scrollPadding: widget.textFieldConfiguration.scrollPadding,
-          textInputAction: widget.textFieldConfiguration.textInputAction,
-          textCapitalization: widget.textFieldConfiguration.textCapitalization,
-          keyboardAppearance: widget.textFieldConfiguration.keyboardAppearance,
-          cursorWidth: widget.textFieldConfiguration.cursorWidth,
-          cursorRadius: widget.textFieldConfiguration.cursorRadius,
-          cursorColor: widget.textFieldConfiguration.cursorColor,
-          textDirection: widget.textFieldConfiguration.textDirection,
-          enableInteractiveSelection:
-              widget.textFieldConfiguration.enableInteractiveSelection,
-          readOnly: widget.hideKeyboard,
-          autofillHints: widget.textFieldConfiguration.autofillHints),
-        ),
+        child: TextField(
+            focusNode: this._effectiveFocusNode,
+            controller: this._effectiveController,
+            decoration: widget.textFieldConfiguration.decoration,
+            style: widget.textFieldConfiguration.style,
+            textAlign: widget.textFieldConfiguration.textAlign,
+            enabled: widget.textFieldConfiguration.enabled,
+            keyboardType: widget.textFieldConfiguration.keyboardType,
+            autofocus: widget.textFieldConfiguration.autofocus,
+            inputFormatters: widget.textFieldConfiguration.inputFormatters,
+            autocorrect: widget.textFieldConfiguration.autocorrect,
+            maxLines: widget.textFieldConfiguration.maxLines,
+            textAlignVertical: widget.textFieldConfiguration.textAlignVertical,
+            minLines: widget.textFieldConfiguration.minLines,
+            maxLength: widget.textFieldConfiguration.maxLength,
+            maxLengthEnforcement:
+                widget.textFieldConfiguration.maxLengthEnforcement,
+            obscureText: widget.textFieldConfiguration.obscureText,
+            onChanged: widget.textFieldConfiguration.onChanged,
+            onSubmitted: widget.textFieldConfiguration.onSubmitted,
+            onEditingComplete: widget.textFieldConfiguration.onEditingComplete,
+            onTap: widget.textFieldConfiguration.onTap,
+            onTapOutside: widget.textFieldConfiguration.onTapOutside,
+            scrollPadding: widget.textFieldConfiguration.scrollPadding,
+            textInputAction: widget.textFieldConfiguration.textInputAction,
+            textCapitalization:
+                widget.textFieldConfiguration.textCapitalization,
+            keyboardAppearance:
+                widget.textFieldConfiguration.keyboardAppearance,
+            cursorWidth: widget.textFieldConfiguration.cursorWidth,
+            cursorRadius: widget.textFieldConfiguration.cursorRadius,
+            cursorColor: widget.textFieldConfiguration.cursorColor,
+            textDirection: widget.textFieldConfiguration.textDirection,
+            enableInteractiveSelection:
+                widget.textFieldConfiguration.enableInteractiveSelection,
+            readOnly: widget.hideKeyboard,
+            autofillHints: widget.textFieldConfiguration.autofillHints),
+      ),
     );
   }
 }
